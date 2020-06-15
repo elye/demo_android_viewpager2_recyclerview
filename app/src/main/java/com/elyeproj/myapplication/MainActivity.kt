@@ -3,13 +3,14 @@ package com.elyeproj.myapplication
 import android.os.Bundle
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : FragmentActivity() {
 
     private val pageTransformer = ViewPager2.PageTransformer { page, position ->
         val absPos = Math.abs(position)
@@ -59,10 +60,12 @@ class MainActivity : AppCompatActivity() {
             when (findViewById<RadioButton>(checkedId).id) {
                 R.id.radio_no_transform -> {
                     view_pager.setPageTransformer(defaultPageTransformer)
+                    view_pager_fragment.setPageTransformer(defaultPageTransformer)
 
                 }
                 R.id.radio_do_transform -> {
                     view_pager.setPageTransformer(pageTransformer)
+                    view_pager_fragment.setPageTransformer(pageTransformer)
                 }
             }
         }
@@ -82,6 +85,10 @@ class MainActivity : AppCompatActivity() {
 
         view_pager.apply {
             adapter = MyAdapterFullLength()
+        }
+
+        view_pager_fragment.apply {
+            adapter = MyFragmentStateAdapter(this@MainActivity)
         }
     }
 }
