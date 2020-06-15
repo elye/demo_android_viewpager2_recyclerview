@@ -6,64 +6,107 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RadioGroup
-        android:id="@+id/snap_method"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_recycler_views"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/container_view_pagers"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <RadioButton
-            android:id="@+id/radio_no_snap"
+
+        <RadioGroup
+            android:id="@+id/snap_method"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="No Snap"/>
-        <RadioButton
-            android:id="@+id/radio_linear_snap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Linear Snap"/>
-        <RadioButton
-            android:id="@+id/radio_page_snap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Page Snap"/>
-    </RadioGroup>
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/recycler_view" >
+            <RadioButton
+                android:id="@+id/radio_no_snap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="No Snap"/>
+            <RadioButton
+                android:id="@+id/radio_linear_snap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Linear Snap"/>
+            <RadioButton
+                android:id="@+id/radio_page_snap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Page Snap"/>
+        </RadioGroup>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@id/recycler_view_full_length"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toTopOf="@id/recycler_view_full_length"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/snap_method" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_full_length"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@id/view_pager"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_full_length"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_view_pagers"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:background="@android:color/darker_gray"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view_full_length" />
+        app:layout_constraintTop_toBottomOf="@id/container_recycler_views" >
+        <RadioGroup
+            android:id="@+id/transform_method"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <RadioButton
+                android:id="@+id/radio_no_transform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="No Transform"/>
+            <RadioButton
+                android:id="@+id/radio_do_transform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Do Transform"/>
+        </RadioGroup>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transform_method" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
