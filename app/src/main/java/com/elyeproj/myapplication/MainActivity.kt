@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
@@ -63,14 +64,10 @@ class MainActivity : FragmentActivity() {
                 R.id.radio_no_transform -> {
                     view_pager.setPageTransformer(defaultPageTransformer)
                     view_pager_fragment.setPageTransformer(defaultPageTransformer)
-                    view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
-                    view_pager_fragment.orientation = ViewPager2.ORIENTATION_VERTICAL
                 }
                 R.id.radio_do_transform -> {
                     view_pager.setPageTransformer(pageTransformer)
                     view_pager_fragment.setPageTransformer(pageTransformer)
-                    view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
-                    view_pager_fragment.orientation = ViewPager2.ORIENTATION_VERTICAL
                 }
             }
         }
@@ -108,5 +105,9 @@ class MainActivity : FragmentActivity() {
         view_pager_fragment.apply {
             adapter = MyFragmentStateAdapter(this@MainActivity)
         }
+
+        TabLayoutMediator(view_pager_fragment_tabs, view_pager_fragment) { tab, position ->
+            tab.text = position.toString()
+        }.attach()
     }
 }
