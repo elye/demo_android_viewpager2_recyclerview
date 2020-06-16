@@ -1,6 +1,9 @@
 package com.elyeproj.myapplication
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
@@ -13,6 +16,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
 class MainActivity : FragmentActivity() {
+
+    companion object {
+        const val TOTAL_ITEM = 10
+    }
+
+    private var lastValue = 0f
 
     private val pageTransformer = ViewPager2.PageTransformer { page, position ->
         val absPos = abs(position)
@@ -38,6 +47,7 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -85,6 +95,10 @@ class MainActivity : FragmentActivity() {
             }
         }
 
+        view_pager_fragment_touch_pad.setOnTouchListener { _, event ->
+            handleOnTouchEvent(event)
+        }
+
         recycler_view.apply {
             adapter = MyAdapter()
             addItemDecoration(MarginItemDecoration(resources.dpToPx(10)))
@@ -109,5 +123,26 @@ class MainActivity : FragmentActivity() {
         TabLayoutMediator(view_pager_fragment_tabs, view_pager_fragment) { tab, position ->
             tab.text = position.toString()
         }.attach()
+    }
+
+    private fun handleOnTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastValue = event.x
+                view_pager_fragment.beginFakeDrag()
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                val value = event.x
+                val delta = value - lastValue
+                view_pager_fragment.fakeDragBy(delta * TOTAL_ITEM)
+                lastValue = value
+            }
+
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
+                view_pager_fragment.endFakeDrag()
+            }
+        }
+        return true
     }
 }

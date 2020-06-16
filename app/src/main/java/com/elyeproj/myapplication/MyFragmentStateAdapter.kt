@@ -3,6 +3,7 @@ package com.elyeproj.myapplication
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.elyeproj.myapplication.MainActivity.Companion.TOTAL_ITEM
 
 class MyFragmentStateAdapter(activity: FragmentActivity): FragmentStateAdapter(activity) {
     override fun createFragment(position: Int): Fragment {
@@ -10,6 +11,6 @@ class MyFragmentStateAdapter(activity: FragmentActivity): FragmentStateAdapter(a
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return TOTAL_ITEM
     }
 }
