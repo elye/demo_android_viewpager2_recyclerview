@@ -81,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/orientation_transition"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -97,6 +98,29 @@
                 android:text="Do Transform"/>
         </RadioGroup>
 
+        <RadioGroup
+            android:id="@+id/orientation_transition"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/view_pager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transform_method">
+            <RadioButton
+                android:id="@+id/radio_horizontal_orientation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Horizontal"/>
+            <RadioButton
+                android:id="@+id/radio_vertical_orientation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vertical"/>
+        </RadioGroup>
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
@@ -106,7 +130,7 @@
             app:layout_constraintBottom_toTopOf="@id/view_pager_fragment"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/transform_method" />
+            app:layout_constraintTop_toBottomOf="@id/orientation_transition" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager_fragment"

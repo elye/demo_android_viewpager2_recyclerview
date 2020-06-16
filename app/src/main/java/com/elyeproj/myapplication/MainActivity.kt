@@ -9,13 +9,17 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.abs
 
 class MainActivity : FragmentActivity() {
 
     private val pageTransformer = ViewPager2.PageTransformer { page, position ->
-        val absPos = Math.abs(position)
+        val absPos = abs(position)
         page.apply {
-            translationX = -absPos*width
+            translationX = if (orientation_transition.checkedRadioButtonId == R.id.radio_horizontal_orientation)
+                -absPos * width else 0f
+            translationY = if (orientation_transition.checkedRadioButtonId == R.id.radio_vertical_orientation)
+                -absPos  *height else 0f
             val scale = if (absPos > 1) 0.8F else 1 - absPos*0.2F
             scaleX = scale
             scaleY = scale
@@ -24,7 +28,6 @@ class MainActivity : FragmentActivity() {
     }
 
     private val defaultPageTransformer = ViewPager2.PageTransformer { page, position ->
-        val absPos = Math.abs(position)
         page.apply {
             translationX = 0f
             translationY = 0f
@@ -33,7 +36,6 @@ class MainActivity : FragmentActivity() {
             alpha = 1f
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +63,27 @@ class MainActivity : FragmentActivity() {
                 R.id.radio_no_transform -> {
                     view_pager.setPageTransformer(defaultPageTransformer)
                     view_pager_fragment.setPageTransformer(defaultPageTransformer)
-
+                    view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
+                    view_pager_fragment.orientation = ViewPager2.ORIENTATION_VERTICAL
                 }
                 R.id.radio_do_transform -> {
                     view_pager.setPageTransformer(pageTransformer)
                     view_pager_fragment.setPageTransformer(pageTransformer)
+                    view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
+                    view_pager_fragment.orientation = ViewPager2.ORIENTATION_VERTICAL
+                }
+            }
+        }
+
+        orientation_transition.setOnCheckedChangeListener { _, checkedId ->
+            when (findViewById<RadioButton>(checkedId).id) {
+                R.id.radio_horizontal_orientation -> {
+                    view_pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    view_pager_fragment.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                }
+                R.id.radio_vertical_orientation -> {
+                    view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
+                    view_pager_fragment.orientation = ViewPager2.ORIENTATION_VERTICAL
                 }
             }
         }
