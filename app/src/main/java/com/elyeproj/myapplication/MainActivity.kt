@@ -135,7 +135,7 @@ class MainActivity : FragmentActivity() {
             MotionEvent.ACTION_MOVE -> {
                 val value = event.x
                 val delta = value - lastValue
-                view_pager_fragment.fakeDragBy(delta * TOTAL_ITEM)
+                view_pager_fragment.fakeDragBy(delta)
                 lastValue = value
             }
 
