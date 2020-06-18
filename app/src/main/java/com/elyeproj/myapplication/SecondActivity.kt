@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_second.*
 class SecondActivity : AppCompatActivity() {
     private var lastValue = 0f
 
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,14 @@ class SecondActivity : AppCompatActivity() {
         }
 
         TabLayoutMediator(view_pager_preview_tabs, view_pager_preview) { tab, position ->
+            tab.text = position.toString()
+        }.attach()
+
+        view_pager_nested.apply {
+            adapter = NestedAdapter()
+        }
+
+        TabLayoutMediator(view_pager_nested_tabs, view_pager_nested) { tab, position ->
             tab.text = position.toString()
         }.attach()
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_card"
+    android:elevation="@dimen/elevation_card"
+    card_view:cardBackgroundColor="#00F"
+    card_view:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/internal_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/view_pager_inner_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F3F"
+            card_view:tabIndicatorGravity="top"
+            card_view:tabMode="scrollable" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
