@@ -2,6 +2,7 @@ package com.elyeproj.myapplication
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -57,6 +58,18 @@ class SecondActivity : AppCompatActivity() {
             tab.text = position.toString()
         }.attach()
 
+        infinite_view_pager2.apply {
+            setAdapter(InfiniteViewPager2Adaptor(listOf("First", "Second", "Third", "Last")))
+            addScrollListener(object : RecyclerView.OnScrollListener() {
+
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        Log.d("Tracking", "I am at item index ${getCurrentItem()}")
+                    }
+                }
+            })
+        }
     }
 
     private fun handleOnTouchEvent(event: MotionEvent): Boolean {
