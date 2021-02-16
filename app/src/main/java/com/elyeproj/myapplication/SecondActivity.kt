@@ -61,7 +61,6 @@ class SecondActivity : AppCompatActivity() {
         infinite_view_pager2.apply {
             setAdapter(InfiniteViewPager2Adaptor(listOf("First", "Second", "Third", "Last")))
             addScrollListener(object : RecyclerView.OnScrollListener() {
-
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
