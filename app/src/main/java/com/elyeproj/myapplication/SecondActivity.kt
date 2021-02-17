@@ -4,11 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.elyeproj.myapplication.MainActivity.Companion.TOTAL_ITEM
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_second.*
 
 class SecondActivity : AppCompatActivity() {
     private var lastValue = 0f
@@ -19,19 +20,23 @@ class SecondActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        view_pager_touch_pad.setOnTouchListener { _, event ->
+        findViewById<View>(R.id.view_pager_touch_pad).setOnTouchListener { _, event ->
             handleOnTouchEvent(event)
         }
 
-        view_pager_quick_scroll.apply {
+        val viewPagerQuickScroll = findViewById<ViewPager2>(R.id.view_pager_quick_scroll)
+        val viewPagerPreview = findViewById<ViewPager2>(R.id.view_pager_preview)
+        val viewPagerNested = findViewById<ViewPager2>(R.id.view_pager_nested)
+
+        viewPagerQuickScroll.apply {
             adapter = MyAdapterFullLength()
         }
 
-        TabLayoutMediator(view_pager_tabs, view_pager_quick_scroll) { tab, position ->
+        TabLayoutMediator(findViewById(R.id.view_pager_tabs), viewPagerQuickScroll) { tab, position ->
             tab.text = position.toString()
         }.attach()
 
-        view_pager_preview.apply {
+        viewPagerPreview.apply {
             // Set offscreen page limit to at least 1, so adjacent pages are always laid out
             offscreenPageLimit = 1
             val recyclerView = getChildAt(0) as RecyclerView
@@ -46,19 +51,19 @@ class SecondActivity : AppCompatActivity() {
             adapter = MyAdapterFullLength()
         }
 
-        TabLayoutMediator(view_pager_preview_tabs, view_pager_preview) { tab, position ->
+        TabLayoutMediator(findViewById(R.id.view_pager_preview_tabs), viewPagerPreview) { tab, position ->
             tab.text = position.toString()
         }.attach()
 
-        view_pager_nested.apply {
+        viewPagerNested.apply {
             adapter = NestedAdapter()
         }
 
-        TabLayoutMediator(view_pager_nested_tabs, view_pager_nested) { tab, position ->
+        TabLayoutMediator(findViewById(R.id.view_pager_nested_tabs), viewPagerNested) { tab, position ->
             tab.text = position.toString()
         }.attach()
 
-        infinite_view_pager2.apply {
+        findViewById<InfiniteViewPager2>(R.id.infinite_view_pager2).apply {
             setAdapter(InfiniteViewPager2Adaptor(listOf("First", "Second", "Third", "Last")))
             addScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -72,21 +77,23 @@ class SecondActivity : AppCompatActivity() {
     }
 
     private fun handleOnTouchEvent(event: MotionEvent): Boolean {
+        val viewPagerQuickScroll = findViewById<ViewPager2>(R.id.view_pager_quick_scroll)
+
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 lastValue = event.x
-                view_pager_quick_scroll.beginFakeDrag()
+                viewPagerQuickScroll.beginFakeDrag()
             }
 
             MotionEvent.ACTION_MOVE -> {
                 val value = event.x
                 val delta = value - lastValue
-                view_pager_quick_scroll.fakeDragBy(delta * TOTAL_ITEM)
+                viewPagerQuickScroll.fakeDragBy(delta * TOTAL_ITEM)
                 lastValue = value
             }
 
             MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
-                view_pager_quick_scroll.endFakeDrag()
+                viewPagerQuickScroll.endFakeDrag()
             }
         }
         return true

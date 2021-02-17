@@ -2,8 +2,8 @@ package com.elyeproj.myapplication
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item.view.*
 
 class InfiniteViewPager2Adaptor(itemListOriginal: List<String>) :
     RecyclerView.Adapter<MyViewHolder>() {
@@ -19,7 +19,7 @@ class InfiniteViewPager2Adaptor(itemListOriginal: List<String>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemView.txt_label.text = itemList[position]
+        holder.itemView.findViewById<TextView>(R.id.txt_label).text = itemList[position]
     }
 
     override fun getItemCount(): Int {
